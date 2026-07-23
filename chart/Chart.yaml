@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prenom-nom-app
+description: Application personnalisée - fatou faye
+version: 0.1.0
+appVersion: "1.0.0"
