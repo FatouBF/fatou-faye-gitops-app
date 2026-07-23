@@ -25,6 +25,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Convert owner to lowercase
+        run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
       - name: Build and push image
         uses: docker/build-push-action@v5
@@ -32,8 +35,8 @@ jobs:
           context: ./app
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/fatou-faye-gitops-app:latest
-            ghcr.io/${{ github.repository_owner }}/fatou-faye-gitops-app:${{ github.sha }}
+            ghcr.io/${{ env.OWNER_LC }}/fatou-faye-gitops-app:latest
+            ghcr.io/${{ env.OWNER_LC }}/fatou-faye-gitops-app:${{ github.sha }}
 
       - name: Scan de vulnérabilités (Trivy)
         uses: aquasecurity/trivy-action@master
